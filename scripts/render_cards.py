@@ -4,54 +4,59 @@
 import os
 import json
 import html
-import base64
 import datetime
-import subprocess
-import urllib.request
 from pathlib import Path
-from collections import Counter, defaultdict
 
 ROOT = Path(__file__).resolve().parents[1]
 CARDS = ROOT / "cards"
 DATA = ROOT / "data" / "contributions.json"
-FONTS = ROOT / "fonts"
 
-USERNAME = os.getenv("GITHUB_USERNAME", "SaraUET")
+USERNAME = "SaraUET"
 STATIC = os.getenv("STATIC", "0") == "1"
 
+# ------------------------------------------
 # BRAND COLOURS
+# ------------------------------------------
+
 INK = "#3d0a1b"
 MAROON = "#7b1e3a"
 ROSE = "#b83a5a"
 ACCENT = "#c0506a"
 PALE = "#f3dfe3"
-LIGHT = "#f6e7e9"
+LIGHT = "#fff5f6"
 MUTED = "#c9a3ad"
+DARK = "#35101e"
 
+# ------------------------------------------
 # PROFILE INFORMATION
+# ------------------------------------------
+
 PROFILE = {
     "name": "Sara Shafqat",
     "about": "BBIT graduate blending IT, business operations and a designer's eye.",
-    "portrait": "",
+    "tagline": "IT  /  DESIGN  /  WEB  /  CREATIVE IDEAS",
 
     "links": [
         {
             "name": "PORTFOLIO",
             "description": "My creative space",
             "url": "https://saruet.github.io",
-            "symbol": "↗"
+            "symbol": "↗",
+            "number": "01"
         },
         {
             "name": "LINKEDIN",
             "description": "Let's connect",
             "url": "https://linkedin.com/in/sarashafqat",
-            "symbol": "in"
+            "symbol": "in",
+            "number": "02"
         },
         {
             "name": "INSTAGRAM",
             "description": "Art, design & more",
             "url": "https://instagram.com/gallerieeme",
-            "symbol": "✳"
+            "symbol": "✳",
+            "number": "03"
         }
     ],
 
@@ -60,87 +65,53 @@ PROFILE = {
             "name": "CakeBlogSite",
             "description": "A baking-focused web project.",
             "language": "HTML / CSS",
-            "url": "https://github.com/SaraUET/CakeBlogSite"
+            "url": "https://github.com/SaraUET/CakeBlogSite",
+            "type": "CREATIVE BUILD",
+            "number": "01"
         },
         {
             "name": "Portfolio",
             "description": "My personal portfolio and creative work.",
             "language": "HTML / CSS / JS",
-            "url": "https://github.com/SaraUET/SaraUET.github.io"
+            "url": "https://github.com/SaraUET/SaraUET.github.io",
+            "type": "PERSONAL SPACE",
+            "number": "02"
         }
     ]
 }
 
-MONTHS = [
-    "Jan", "Feb", "Mar", "Apr",
-    "May", "Jun", "Jul", "Aug",
-    "Sep", "Oct", "Nov", "Dec"
-]
 
+# ------------------------------------------
+# HELPERS
+# ------------------------------------------
 
-def escape(value):
+def esc(value):
     return html.escape(str(value), quote=True)
 
 
-def font_data():
-    font = FONTS / "Poppins-Regular.ttf"
-
-    if not font.exists():
-        return ""
-
-    output = CARDS / "poppins.woff"
-
-    subprocess.run([
-        "pyftsubset",
-        str(font),
-        f"--output-file={output}",
-        "--flavor=woff",
-        "--unicodes=U+0000-00FF,U+2010-205E"
-    ], check=True)
-
-    encoded = base64.b64encode(
-        output.read_bytes()
-    ).decode()
-
-    return f"data:font/woff;base64,{encoded}"
-
-
-FONT_URI = ""
-
-
-def svg_start(width, height, delay=0):
-
-    font = ""
-
-    if FONT_URI:
-        font = f"""
-        @font-face {{
-            font-family: Poppins;
-            src: url('{FONT_URI}') format('woff');
-        }}
-        """
+def start_svg(width, height, delay=0):
 
     animation = ""
 
     if not STATIC:
         animation = f"""
         .card {{
-            opacity: 0;
-            animation: appear .9s ease-out
-            {delay}s forwards;
+            animation: enter .8s ease-out {delay}s both;
         }}
 
         .rise {{
-            opacity: 0;
-            animation: rise .8s ease-out
-            {delay + .2}s forwards;
+            animation: rise .8s ease-out {delay + 0.15}s both;
         }}
 
-        @keyframes appear {{
-            to {{ opacity: 1; }}
+        .float {{
+            animation: float 5s ease-in-out infinite;
         }}
 
-        @keyframes rise {{
+        .glow {{
+            animation: glow 4s ease-in-out infinite;
+        }}
+
+        @keyframes enter {{
             from {{
                 opacity: 0;
                 transform: translateY(15px);
@@ -151,8 +122,29 @@ def svg_start(width, height, delay=0):
             }}
         }}
 
+        @keyframes rise {{
+            from {{
+                opacity: 0;
+                transform: translateY(12px);
+            }}
+            to {{
+                opacity: 1;
+                transform: translateY(0);
+            }}
+        }}
+
+        @keyframes float {{
+            0%, 100% {{ transform: translateY(0); }}
+            50% {{ transform: translateY(-8px); }}
+        }}
+
+        @keyframes glow {{
+            0%, 100% {{ opacity: .15; }}
+            50% {{ opacity: .45; }}
+        }}
+
         @media (prefers-reduced-motion: reduce) {{
-            .card, .rise {{
+            .card, .rise, .float, .glow {{
                 animation: none !important;
                 opacity: 1 !important;
                 transform: none !important;
@@ -162,457 +154,530 @@ def svg_start(width, height, delay=0):
 
     return f"""
     <svg xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
          width="{width}" height="{height}"
          viewBox="0 0 {width} {height}">
 
     <style>
-        {font}
-        text {{ font-family: Poppins, Arial, sans-serif; }}
+        text {{
+            font-family: Poppins, Arial, sans-serif;
+        }}
         {animation}
     </style>
 
     <defs>
-        <linearGradient id="background"
-                        x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stop-color="{INK}"/>
-            <stop offset="60%" stop-color="{MAROON}"/>
+            <stop offset="55%" stop-color="{MAROON}"/>
             <stop offset="100%" stop-color="{ROSE}"/>
         </linearGradient>
-    </defs>
 
-    <g class="card">
-        <rect width="100%" height="100%"
-              rx="22" fill="url(#background)"/>
-    </g>
+        <linearGradient id="blush" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fff9fa"/>
+            <stop offset="100%" stop-color="{PALE}"/>
+        </linearGradient>
+
+        <pattern id="dots" width="22" height="22"
+                 patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.2"
+                    fill="{PALE}" opacity=".28"/>
+        </pattern>
+    </defs>
     """
 
 
 def save_card(filename, svg):
 
-    CARDS.mkdir(exist_ok=True)
+    CARDS.mkdir(parents=True, exist_ok=True)
 
     (CARDS / filename).write_text(
-        svg + "\n</svg>",
+        svg + "\n</svg>\n",
         encoding="utf-8"
     )
 
 
-# 1. HERO CARD
+# ------------------------------------------
+# 01. HERO CARD
+# ------------------------------------------
 
 def hero_card():
 
-    svg = svg_start(1000, 250, 0)
+    svg = start_svg(1000, 280, 0)
 
     svg += f"""
-    <text x="50" y="48"
-          fill="{PALE}" font-size="14"
-          letter-spacing="4" class="rise">
-        HELLO, I'M
-    </text>
+    <g class="card">
+        <rect width="1000" height="280"
+              rx="26" fill="url(#bg)"/>
+    </g>
 
-    <text x="48" y="120"
-          fill="{LIGHT}" font-size="51"
-          font-weight="600" class="rise">
-        {escape(PROFILE['name'])}
-    </text>
+    <rect x="660" y="0" width="340" height="280"
+          fill="url(#dots)"/>
 
-    <text x="50" y="160"
-          fill="{PALE}" font-size="17"
-          class="rise">
-        {escape(PROFILE['about'])}
-    </text>
-
-    <path d="M50 190 H260"
-          stroke="{PALE}" opacity=".5"/>
-
-    <text x="50" y="220"
-          fill="{PALE}" font-size="12"
-          letter-spacing="2">
-        IT · DESIGN · WEB · CREATIVE IDEAS
-    </text>
-
-    <circle cx="870" cy="120" r="68"
+    <circle cx="855" cy="135" r="112"
             fill="none" stroke="{PALE}"
-            stroke-opacity=".5" stroke-width="2"/>
+            stroke-width="1.5" opacity=".3"/>
 
-    <circle cx="870" cy="120" r="53"
-            fill="{PALE}" fill-opacity=".12"/>
+    <circle cx="855" cy="135" r="91"
+            fill="none" stroke="{PALE}"
+            stroke-dasharray="3 9" opacity=".6"
+            class="float"/>
 
-    <text x="870" y="139"
-          fill="{LIGHT}" font-size="48"
-          text-anchor="middle">
-        S.
+    <circle cx="945" cy="45" r="9"
+            fill="{LIGHT}" class="glow"/>
+
+    <circle cx="750" cy="220" r="5"
+            fill="{PALE}"/>
+
+    <path d="M720 55 Q800 0 890 45"
+          fill="none" stroke="{PALE}"
+          stroke-width="2" opacity=".4"/>
+
+    <g class="rise">
+        <text x="58" y="55"
+              fill="{PALE}" font-size="13"
+              letter-spacing="4">
+            HELLO, I'M
+        </text>
+
+        <text x="55" y="130"
+              fill="{LIGHT}" font-size="54"
+              font-weight="700">
+            {esc(PROFILE['name'])}
+        </text>
+
+        <text x="59" y="171"
+              fill="{PALE}" font-size="16">
+            {esc(PROFILE['about'])}
+        </text>
+
+        <path d="M60 198 H340"
+              stroke="{PALE}" opacity=".5"/>
+
+        <text x="60" y="230"
+              fill="{LIGHT}" font-size="12"
+              letter-spacing="2">
+            {esc(PROFILE['tagline'])}
+        </text>
+    </g>
+
+    <g class="float">
+        <circle cx="855" cy="135" r="67"
+                fill="{PALE}" opacity=".15"/>
+
+        <circle cx="855" cy="135" r="57"
+                fill="none" stroke="{PALE}"
+                stroke-width="1.5"/>
+
+        <text x="855" y="153"
+              fill="{LIGHT}" font-size="52"
+              font-weight="600"
+              text-anchor="middle">
+            S.
+        </text>
+    </g>
+
+    <text x="940" y="246"
+          fill="{PALE}" font-size="10"
+          text-anchor="end" letter-spacing="2">
+        PERSONAL PROFILE / 2026
     </text>
     """
 
     save_card("hero.svg", svg)
 
 
-# 2. THREE LINKED TILES
+# ------------------------------------------
+# 02. SOCIAL LINK CARDS
+# ------------------------------------------
 
 def link_card(link, index):
 
-    svg = svg_start(320, 110, .3 + index * .2)
+    svg = start_svg(320, 130, .2 + index * .18)
 
     svg += f"""
-    <rect x="1" y="1" width="318" height="108"
-          rx="18" fill="{PALE}"/>
+    <g class="card">
+        <rect x="2" y="2" width="316" height="126"
+              rx="22" fill="url(#blush)"
+              stroke="{ROSE}" stroke-width="1.2"/>
+    </g>
 
-    <circle cx="48" cy="55" r="27"
+    <path d="M245 2 H296 Q318 2 318 24 V75 Z"
+          fill="{ROSE}" opacity=".08"/>
+
+    <text x="25" y="26"
+          fill="{ROSE}" font-size="10"
+          letter-spacing="2">
+        {link['number']} / CONNECT
+    </text>
+
+    <circle cx="57" cy="81" r="28"
             fill="{MAROON}"/>
 
-    <text x="48" y="63"
-          fill="{LIGHT}" font-size="22"
+    <circle cx="57" cy="81" r="33"
+            fill="none" stroke="{ROSE}"
+            opacity=".4"/>
+
+    <text x="57" y="89"
+          fill="{LIGHT}" font-size="21"
           text-anchor="middle">
-        {escape(link['symbol'])}
+        {esc(link['symbol'])}
     </text>
 
-    <text x="90" y="45"
+    <text x="103" y="73"
           fill="{INK}" font-size="15"
-          font-weight="600">
-        {escape(link['name'])}
+          font-weight="700">
+        {esc(link['name'])}
     </text>
 
-    <text x="90" y="72"
+    <text x="103" y="96"
           fill="{MAROON}" font-size="11">
-        {escape(link['description'])}
+        {esc(link['description'])}
     </text>
 
-    <text x="290" y="63"
-          fill="{ROSE}" font-size="20">
+    <text x="290" y="98"
+          fill="{ROSE}" font-size="21"
+          text-anchor="middle">
         ↗
     </text>
+
+    <path d="M103 108 H175"
+          stroke="{ROSE}" opacity=".5"/>
     """
 
     save_card(f"link-{index + 1}.svg", svg)
 
 
-# 3. GITHUB CONTRIBUTION DATA
-
-def get_contributions():
-
-    token = os.getenv("GITHUB_TOKEN")
-
-    if not token:
-        raise RuntimeError("GITHUB_TOKEN is missing")
-
-    query = """
-    query($login:String!) {
-      user(login:$login) {
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                date
-                contributionCount
-                weekday
-              }
-            }
-          }
-        }
-      }
-    }
-    """
-
-    payload = json.dumps({
-        "query": query,
-        "variables": {"login": USERNAME}
-    }).encode()
-
-    request = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json"
-        }
-    )
-
-    with urllib.request.urlopen(request) as response:
-        result = json.load(response)
-
-    if result.get("errors") or not result.get("data", {}).get("user"):
-        raise RuntimeError(f"GitHub API error: {result.get('errors')}")
-
-    calendar = result["data"]["user"][
-        "contributionsCollection"
-    ]["contributionCalendar"]
-
-    days = [
-        day
-        for week in calendar["weeks"]
-        for day in week["contributionDays"]
-    ]
-
-    monthly = defaultdict(int)
-
-    for day in days:
-        monthly[day["date"][:7]] += day["contributionCount"]
-
-    active = [
-        day for day in days
-        if day["contributionCount"] > 0
-    ]
-
-    daily = {
-        datetime.date.fromisoformat(day["date"]):
-        day["contributionCount"]
-        for day in days
-    }
-
-    today = datetime.date.today()
-
-    if daily.get(today, 0) == 0:
-        today -= datetime.timedelta(days=1)
-
-    streak = 0
-
-    while daily.get(today, 0) > 0:
-        streak += 1
-        today -= datetime.timedelta(days=1)
-
-    weekdays = Counter()
-
-    for day in active:
-        weekdays[day["weekday"]] += day["contributionCount"]
-
-    names = [
-        "Sunday", "Monday", "Tuesday",
-        "Wednesday", "Thursday", "Friday",
-        "Saturday"
-    ]
-
-    data = {
-        "total": calendar["totalContributions"],
-        "months": [
-            {"month": month, "count": count}
-            for month, count in sorted(monthly.items())[-12:]
-        ],
-        "days": days,
-        "current_streak": streak,
-        "active_days": len(active),
-        "busiest_day": (
-            names[weekdays.most_common(1)[0][0]]
-            if weekdays else "—"
-        ),
-        "updated_at": datetime.datetime.now(
-            datetime.timezone.utc
-        ).isoformat()
-    }
-
-    DATA.parent.mkdir(parents=True, exist_ok=True)
-
-    DATA.write_text(
-        json.dumps(data, indent=2),
-        encoding="utf-8"
-    )
-
-    return data
-
+# ------------------------------------------
+# 03. CONTRIBUTION DATA
+# ------------------------------------------
 
 def load_data():
 
+    empty = {
+        "total": 0,
+        "months": [],
+        "days": [],
+        "current_streak": 0,
+        "active_days": 0,
+        "busiest_day": "—"
+    }
+
     try:
-        return json.loads(DATA.read_text())
+        if DATA.exists():
+            saved = json.loads(
+                DATA.read_text(encoding="utf-8")
+            )
+            return {**empty, **saved}
+
     except (OSError, json.JSONDecodeError):
-        return {
-            "total": 0,
-            "months": [],
-            "days": [],
-            "current_streak": 0,
-            "active_days": 0,
-            "busiest_day": "—"
-        }
+        print("Contribution data could not be read.")
+
+    return empty
 
 
-# 4. MONTHLY ACTIVITY CARD
+# ------------------------------------------
+# 04. ACTIVITY DASHBOARD
+# ------------------------------------------
 
 def activity_card(data):
 
-    svg = svg_start(1000, 290, .6)
+    svg = start_svg(1000, 330, .5)
+
+    months = data.get("months", [])
+    total = int(data.get("total", 0) or 0)
 
     svg += f"""
-    <text x="40" y="45"
-          fill="{LIGHT}" font-size="21"
-          font-weight="600">
+    <g class="card">
+        <rect x="20" y="20" width="960" height="290"
+              rx="24" fill="url(#bg)"/>
+    </g>
+
+    <rect x="20" y="20" width="960" height="290"
+          rx="24" fill="url(#dots)"/>
+
+    <text x="55" y="65"
+          fill="{LIGHT}" font-size="22"
+          font-weight="700">
         CONTRIBUTION RHYTHM
+    </text>
+
+    <text x="55" y="91"
+          fill="{PALE}" font-size="11"
+          letter-spacing="2">
+        A LITTLE PROGRESS, DAY BY DAY
     </text>
     """
 
     stats = [
-        ("STREAK", f"{data['current_streak']} days"),
-        ("ACTIVE DAYS", data["active_days"]),
-        ("BUSIEST DAY", data["busiest_day"])
+        ("TOTAL", f"{total:,}"),
+        ("STREAK", f"{data.get('current_streak', 0)} days"),
+        ("ACTIVE DAYS", str(data.get("active_days", 0))),
+        ("BUSIEST DAY", str(data.get("busiest_day", "—")))
     ]
 
     for i, (label, value) in enumerate(stats):
 
-        x = 640 + i * 110
+        x = 545 + i * 105
 
         svg += f"""
-        <text x="{x}" y="42"
-              fill="{PALE}" font-size="10"
+        <text x="{x}" y="51"
+              fill="{PALE}" font-size="9"
               text-anchor="middle">
-            {escape(label)}
+            {esc(label)}
         </text>
 
-        <text x="{x}" y="68"
+        <text x="{x}" y="78"
               fill="{LIGHT}" font-size="15"
+              font-weight="700"
               text-anchor="middle">
-            {escape(value)}
+            {esc(value)}
         </text>
         """
 
-    months = data.get("months", [])
-    maximum = max(
-        [m["count"] for m in months] or [1]
-    ) or 1
+    if months and max(m.get("count", 0) for m in months) > 0:
 
-    x_start = 50
-    y_base = 225
-    chart_height = 120
-    slot = 900 / max(len(months), 1)
+        maximum = max(m["count"] for m in months)
+        slot = 870 / len(months)
 
-    for i, month in enumerate(months):
+        for i, month in enumerate(months[-12:]):
 
-        value = month["count"]
-        height = max(3, chart_height * value / maximum)
+            value = month["count"]
+            height = max(5, 115 * value / maximum)
 
-        x = x_start + i * slot + slot * .2
-        y = y_base - height
+            x = 65 + i * slot + slot * .2
+            y = 252 - height
 
-        month_number = int(month["month"][-2:])
-        label = MONTHS[month_number - 1]
+            month_number = int(month["month"][-2:])
+            label = [
+                "Jan", "Feb", "Mar", "Apr",
+                "May", "Jun", "Jul", "Aug",
+                "Sep", "Oct", "Nov", "Dec"
+            ][month_number - 1]
+
+            svg += f"""
+            <rect x="{x:.1f}" y="{y:.1f}"
+                  width="{slot * .58:.1f}"
+                  height="{height:.1f}"
+                  rx="7" fill="{PALE}"
+                  class="rise"/>
+
+            <text x="{x + slot * .29:.1f}"
+                  y="278" fill="{PALE}"
+                  font-size="10"
+                  text-anchor="middle">
+                {label}
+            </text>
+            """
+
+    else:
 
         svg += f"""
-        <rect x="{x}" y="{y}"
-              width="{slot * .58}" height="{height}"
-              rx="5" fill="{ROSE}" class="rise"/>
+        <path d="M65 252 H935"
+              stroke="{PALE}" opacity=".3"
+              stroke-dasharray="4 7"/>
 
-        <text x="{x + slot * .29}" y="250"
-              fill="{PALE}" font-size="11"
+        <text x="500" y="166"
+              fill="{LIGHT}" font-size="18"
+              text-anchor="middle"
+              font-weight="600">
+            Your activity story starts here.
+        </text>
+
+        <text x="500" y="194"
+              fill="{PALE}" font-size="12"
               text-anchor="middle">
-            {label}
+            Connect your GitHub activity to reveal your monthly rhythm.
+        </text>
+
+        <text x="500" y="218"
+              fill="{PALE}" font-size="10"
+              text-anchor="middle">
+            Real activity only. No made-up statistics.
         </text>
         """
 
     svg += f"""
-    <text x="50" y="275"
-          fill="{PALE}" font-size="12">
-        TOTAL CONTRIBUTIONS: {data['total']:,}
+    <text x="55" y="296"
+          fill="{PALE}" font-size="10"
+          letter-spacing="1">
+        GITHUB ACTIVITY / PERSONAL DASHBOARD
     </text>
     """
 
     save_card("activity.svg", svg)
 
 
-# 5. INDIVIDUAL REPOSITORY CARDS
+# ------------------------------------------
+# 05. FEATURED REPOSITORIES
+# ------------------------------------------
 
 def repo_card(repo, index):
 
-    svg = svg_start(1000, 155, 1 + index * .2)
+    svg = start_svg(1000, 180, .7 + index * .2)
 
     svg += f"""
-    <rect x="1" y="1" width="998" height="153"
-          rx="21" fill="{PALE}"/>
+    <g class="card">
+        <rect x="2" y="2" width="996" height="176"
+              rx="24" fill="url(#blush)"
+              stroke="{ROSE}" stroke-width="1.2"/>
+    </g>
 
-    <circle cx="65" cy="77" r="31"
+    <rect x="2" y="2" width="13" height="176"
+          rx="6" fill="{MAROON}"/>
+
+    <text x="50" y="40"
+          fill="{ROSE}" font-size="10"
+          letter-spacing="2">
+        {esc(repo['type'])} / {esc(repo['number'])}
+    </text>
+
+    <circle cx="85" cy="109" r="30"
             fill="{MAROON}"/>
 
-    <text x="65" y="85"
-          fill="{LIGHT}" font-size="22"
+    <text x="85" y="117"
+          fill="{LIGHT}" font-size="19"
           text-anchor="middle">
-        {index + 1}
+        {index + 1:02d}
     </text>
 
-    <text x="120" y="60"
-          fill="{INK}" font-size="22"
-          font-weight="600">
-        {escape(repo['name'])}
+    <text x="140" y="91"
+          fill="{INK}" font-size="25"
+          font-weight="700">
+        {esc(repo['name'])}
     </text>
 
-    <text x="120" y="89"
-          fill="{MAROON}" font-size="14">
-        {escape(repo['description'])}
+    <text x="140" y="120"
+          fill="{MAROON}" font-size="13">
+        {esc(repo['description'])}
     </text>
 
-    <text x="120" y="120"
-          fill="{MUTED}" font-size="12">
-        {escape(repo['language'])}
+    <rect x="140" y="137" width="160" height="23"
+          rx="11" fill="{ROSE}" opacity=".13"/>
+
+    <text x="220" y="153"
+          fill="{MAROON}" font-size="10"
+          text-anchor="middle">
+        {esc(repo['language'])}
     </text>
 
-    <text x="950" y="88"
-          fill="{ROSE}" font-size="26"
+    <circle cx="930" cy="90" r="25"
+            fill="{ROSE}" opacity=".12"/>
+
+    <text x="930" y="99"
+          fill="{ROSE}" font-size="25"
           text-anchor="middle">
         ↗
+    </text>
+
+    <text x="930" y="135"
+          fill="{MAROON}" font-size="9"
+          text-anchor="middle">
+        VIEW REPO
     </text>
     """
 
     save_card(f"repo-{index + 1}.svg", svg)
 
 
-# 6. CONTRIBUTION GRAPH
+# ------------------------------------------
+# 06. CONTRIBUTION HEATMAP
+# ------------------------------------------
 
 def contribution_graph(data):
 
-    svg = svg_start(1000, 190, 1.5)
+    svg = start_svg(1000, 230, 1.2)
+
+    days = data.get("days", [])[-371:]
 
     svg += f"""
-    <text x="40" y="42"
-          fill="{LIGHT}" font-size="20"
-          font-weight="600">
+    <g class="card">
+        <rect x="20" y="20" width="960" height="190"
+              rx="24" fill="url(#bg)"/>
+    </g>
+
+    <rect x="20" y="20" width="960" height="190"
+          rx="24" fill="url(#dots)"/>
+
+    <text x="55" y="59"
+          fill="{LIGHT}" font-size="21"
+          font-weight="700">
         A YEAR OF MAKING THINGS
+    </text>
+
+    <text x="55" y="81"
+          fill="{PALE}" font-size="10"
+          letter-spacing="2">
+        EVERY LITTLE COMMIT COUNTS
     </text>
     """
 
-    days = data.get("days", [])[-364:]
+    if days:
 
-    cell = 10
-    gap = 5
-    start_x = 45
-    start_y = 70
+        cell = 10
+        gap = 5
+        start_x = 55
+        start_y = 105
 
-    for i, day in enumerate(days):
+        for i, day in enumerate(days):
 
-        col = i // 7
-        row = i % 7
+            col = i // 7
+            row = i % 7
 
-        count = day["contributionCount"]
+            count = day.get("contributionCount", 0)
 
-        opacity = (
-            .13 if count == 0
-            else min(.95, .28 + count * .17)
-        )
+            if count == 0:
+                fill, opacity = PALE, .13
+            elif count <= 2:
+                fill, opacity = "#d98ca0", .75
+            elif count <= 5:
+                fill, opacity = "#e9a8b8", .9
+            elif count <= 9:
+                fill, opacity = "#f7cbd4", .98
+            else:
+                fill, opacity = "#fff0f3", 1
 
-        x = start_x + col * (cell + gap)
-        y = start_y + row * (cell + gap)
+            x = start_x + col * (cell + gap)
+            y = start_y + row * (cell + gap)
+
+            svg += f"""
+            <rect x="{x}" y="{y}"
+                  width="{cell}" height="{cell}"
+                  rx="2.5" fill="{fill}"
+                  opacity="{opacity}"/>
+            """
+
+    else:
 
         svg += f"""
-        <rect x="{x}" y="{y}"
-              width="{cell}" height="{cell}"
-              rx="2" fill="{ROSE}"
-              opacity="{opacity}"/>
+        <rect x="55" y="105" width="890" height="68"
+              rx="12" fill="url(#dots)"/>
+
+        <text x="500" y="139"
+              fill="{LIGHT}" font-size="16"
+              text-anchor="middle"
+              font-weight="600">
+            Your contribution map is waiting.
+        </text>
+
+        <text x="500" y="161"
+              fill="{PALE}" font-size="11"
+              text-anchor="middle">
+            Your real GitHub activity will appear here when connected.
+        </text>
         """
 
     save_card("contributions.svg", svg)
 
 
+# ------------------------------------------
 # MAIN RENDERER
+# ------------------------------------------
 
 def main():
 
-    global FONT_URI
+    CARDS.mkdir(parents=True, exist_ok=True)
+    (ROOT / "data").mkdir(parents=True, exist_ok=True)
 
-    CARDS.mkdir(exist_ok=True)
-
-    FONT_URI = font_data()
-
-    if "--refresh-data" in os.sys.argv:
-        data = get_contributions()
-    else:
-        data = load_data()
+    data = load_data()
 
     hero_card()
 
@@ -626,7 +691,8 @@ def main():
 
     contribution_graph(data)
 
-    print("All profile cards rendered!")
+    print("All profile cards rendered successfully!")
+    print(f"Cards saved in: {CARDS}")
 
 
 if __name__ == "__main__":
