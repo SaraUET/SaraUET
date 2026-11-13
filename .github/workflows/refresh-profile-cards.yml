@@ -1,0 +1,56 @@
+
+name: Refresh GitHub Profile Cards
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install font tools
+        run: |
+          pip install fonttools brotli
+          sudo apt-get update
+          sudo apt-get install -y curl
+
+      - name: Download Poppins
+        run: |
+          mkdir -p fonts
+          curl -L --fail \
+          "https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins%5Bwght%5D.ttf" \
+          -o fonts/Poppins-Regular.ttf
+
+      - name: Generate cards and refresh data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.repository_owner }}
+        run: |
+          python scripts/render_cards.py --refresh-data
+
+      - name: Commit generated cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email \
+          "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add cards/ data/contributions.json
+
+          git diff --cached --quiet || \
+          git commit -m "Update animated profile cards"
+
+          git push
