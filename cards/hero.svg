@@ -1,102 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+        width="1000"
+        height="340"
+        viewBox="0 0 1000 340"
+        role="img">
 
-    <svg xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         width="1000" height="250"
-         viewBox="0 0 1000 250">
+<defs>
 
-    <style>
-        
-        text { font-family: Poppins, Arial, sans-serif; }
-        
-        .card {
-            opacity: 0;
-            animation: appear .9s ease-out
-            0s forwards;
-        }
+  <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#10030A"/>
+    <stop offset=".55" stop-color="#1B0610"/>
+    <stop offset="1" stop-color="#31091C"/>
+  </linearGradient>
 
-        .rise {
-            opacity: 0;
-            animation: rise .8s ease-out
-            0.2s forwards;
-        }
+  <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#7D173B"/>
+    <stop offset=".55" stop-color="#D84C80"/>
+    <stop offset="1" stop-color="#F3B2CA"/>
+  </linearGradient>
 
-        @keyframes appear {
-            to { opacity: 1; }
-        }
+  <radialGradient id="mist">
+    <stop offset="0" stop-color="#D84C80" stop-opacity=".32"/>
+    <stop offset="1" stop-color="#D84C80" stop-opacity="0"/>
+  </radialGradient>
 
-        @keyframes rise {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
 
-        @media (prefers-reduced-motion: reduce) {
-            .card, .rise {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-        }
-        
-    </style>
+  <filter id="smoke">
+    <feGaussianBlur stdDeviation="16"/>
+  </filter>
 
-    <defs>
-        <linearGradient id="background"
-                        x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#3d0a1b"/>
-            <stop offset="60%" stop-color="#7b1e3a"/>
-            <stop offset="100%" stop-color="#b83a5a"/>
-        </linearGradient>
-    </defs>
+  <pattern id="grid" width="28" height="28"
+           patternUnits="userSpaceOnUse">
+    <path d="M28 0H0V28"
+          fill="none"
+          stroke="#D84C80"
+          stroke-opacity=".09"/>
+  </pattern>
 
-    <g class="card">
-        <rect width="100%" height="100%"
-              rx="22" fill="url(#background)"/>
+  <style>
+    .heading {
+      font-family: Georgia, serif;
+      fill: #FBEAF1;
+    }
+
+    .mono {
+      font-family: monospace;
+      fill: #F3B2CA;
+    }
+
+    .muted {
+      font-family: monospace;
+      fill: #B9869B;
+    }
+
+    .pink {
+      fill: #D84C80;
+    }
+
+    .line {
+      stroke: #D84C80;
+      stroke-opacity: .65;
+      fill: none;
+    }
+  </style>
+
+</defs>
+
+<title>Sara Shafqat — GitHub profile</title>
+
+<rect width="100%" height="100%" rx="22"
+      fill="url(#background)"/>
+
+<rect width="100%" height="100%" rx="22"
+      fill="url(#grid)"/>
+
+<!-- ATMOSPHERIC SMOKE -->
+
+<g filter="url(#smoke)" opacity=".55">
+
+  <ellipse cx="8%" cy="15%" rx="20%" ry="28%"
+           fill="#7D173B" opacity=".5"/>
+
+  <ellipse cx="90%" cy="80%" rx="24%" ry="30%"
+           fill="#D84C80" opacity=".18"/>
+
+</g>
+
+<!-- PINK MIST -->
+
+<ellipse cx="85%" cy="15%" rx="28%" ry="40%"
+         fill="url(#mist)"/>
+
+<!-- GLOWING BORDER -->
+
+<rect x="1" y="1"
+      width="98%" height="98%"
+      rx="21"
+      fill="none"
+      stroke="#D84C80"
+      stroke-opacity=".65"/>
+
+<!-- DECORATIVE STARS -->
+
+<g fill="#F3B2CA" filter="url(#glow)">
+
+  <path d="M88 30l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/>
+
+  <path d="M90 75l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
+
+</g>
+
+
+    <g filter="url(#smoke)" opacity=".6">
+      <ellipse cx="850" cy="90"
+               rx="180" ry="110"
+               fill="#A51E50"
+               opacity=".45"/>
     </g>
-    
-    <text x="50" y="48"
-          fill="#f3dfe3" font-size="14"
-          letter-spacing="4" class="rise">
-        HELLO, I'M
+
+    <rect x="25" y="25"
+          width="950" height="290"
+          rx="25"
+          fill="none"
+          stroke="#D84C80"
+          stroke-opacity=".45"/>
+
+    <!-- PORTRAIT PLACEHOLDER -->
+
+    <circle cx="150" cy="160" r="86"
+            fill="#3C0A1F"
+            stroke="#D84C80"
+            stroke-width="2"/>
+
+    <circle cx="150" cy="160" r="75"
+            fill="none"
+            stroke="#F3B2CA"
+            stroke-dasharray="3 7"
+            opacity=".7"/>
+
+    <text x="150" y="185"
+          text-anchor="middle"
+          class="heading"
+          font-size="70">S.</text>
+
+    <!-- INTRODUCTION -->
+
+    <text x="280" y="105"
+          class="pink mono"
+          font-size="13"
+          letter-spacing="4">
+      HELLO, WORLD — I'M
     </text>
 
-    <text x="48" y="120"
-          fill="#f6e7e9" font-size="51"
-          font-weight="600" class="rise">
-        Sara Shafqat
+    <text x="275" y="175"
+          class="heading"
+          font-size="59">
+      Sara Shafqat
     </text>
 
-    <text x="50" y="160"
-          fill="#f3dfe3" font-size="17"
-          class="rise">
-        BBIT graduate blending IT, business operations and a designer&#x27;s eye.
+    <text x="280" y="218"
+          class="mono"
+          font-size="16"
+          letter-spacing="1">
+      BUILDING THINGS. BREAKING PATTERNS.
     </text>
 
-    <path d="M50 190 H260"
-          stroke="#f3dfe3" opacity=".5"/>
+    <rect x="280" y="250"
+          width="205" height="34"
+          rx="17"
+          fill="#3C0A1F"
+          stroke="#D84C80"/>
 
-    <text x="50" y="220"
-          fill="#f3dfe3" font-size="12"
+    <circle cx="300" cy="267" r="4"
+            fill="#F3B2CA"/>
+
+    <text x="315" y="272"
+          class="mono"
+          font-size="11">
+      OPEN TO OPPORTUNITIES
+    </text>
+
+    <text x="45" y="300"
+          class="muted"
+          font-size="10"
           letter-spacing="2">
-        IT · DESIGN · WEB · CREATIVE IDEAS
-    </text>
-
-    <circle cx="870" cy="120" r="68"
-            fill="none" stroke="#f3dfe3"
-            stroke-opacity=".5" stroke-width="2"/>
-
-    <circle cx="870" cy="120" r="53"
-            fill="#f3dfe3" fill-opacity=".12"/>
-
-    <text x="870" y="139"
-          fill="#f6e7e9" font-size="48"
-          text-anchor="middle">
-        S.
+      IT × BUSINESS × DESIGN
     </text>
     
-</svg>
+    <g transform="translate(850 160) scale(1.05)"
+       filter="url(#glow)">
+
+      <path d="
+        M0 0
+        C-45 -70 -100 -50 -72 -5
+        C-50 28 -22 20 0 0
+        C22 20 50 28 72 -5
+        C100 -50 45 -70 0 0Z"
+        fill="#D84C80"
+        fill-opacity=".15"
+        stroke="#F3B2CA"
+        stroke-width="1.5"/>
+
+      <path d="
+        M0 0
+        C-30 30 -40 70 -8 48
+        L0 0
+        L8 48
+        C40 70 30 30 0 0Z"
+        fill="#7D173B"
+        stroke="#D84C80"/>
+
+      <path d="
+        M-3 -5Q-20 -35 -35 -40
+        M3 -5Q20 -35 35 -40"
+        stroke="#F3B2CA"
+        fill="none"/>
+
+      <path d="M0 -5V40"
+            stroke="#FBEAF1"
+            stroke-width="2"/>
+
+    </g>
+    </svg>

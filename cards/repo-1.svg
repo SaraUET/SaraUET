@@ -1,96 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+        width="480"
+        height="175"
+        viewBox="0 0 480 175"
+        role="img">
 
-    <svg xmlns="http://www.w3.org/2000/svg"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         width="1000" height="155"
-         viewBox="0 0 1000 155">
+<defs>
 
-    <style>
-        
-        text { font-family: Poppins, Arial, sans-serif; }
-        
-        .card {
-            opacity: 0;
-            animation: appear .9s ease-out
-            1.0s forwards;
-        }
+  <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#10030A"/>
+    <stop offset=".55" stop-color="#1B0610"/>
+    <stop offset="1" stop-color="#31091C"/>
+  </linearGradient>
 
-        .rise {
-            opacity: 0;
-            animation: rise .8s ease-out
-            1.2s forwards;
-        }
+  <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#7D173B"/>
+    <stop offset=".55" stop-color="#D84C80"/>
+    <stop offset="1" stop-color="#F3B2CA"/>
+  </linearGradient>
 
-        @keyframes appear {
-            to { opacity: 1; }
-        }
+  <radialGradient id="mist">
+    <stop offset="0" stop-color="#D84C80" stop-opacity=".32"/>
+    <stop offset="1" stop-color="#D84C80" stop-opacity="0"/>
+  </radialGradient>
 
-        @keyframes rise {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="5" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
 
-        @media (prefers-reduced-motion: reduce) {
-            .card, .rise {
-                animation: none !important;
-                opacity: 1 !important;
-                transform: none !important;
-            }
-        }
-        
-    </style>
+  <filter id="smoke">
+    <feGaussianBlur stdDeviation="16"/>
+  </filter>
 
-    <defs>
-        <linearGradient id="background"
-                        x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#3d0a1b"/>
-            <stop offset="60%" stop-color="#7b1e3a"/>
-            <stop offset="100%" stop-color="#b83a5a"/>
-        </linearGradient>
-    </defs>
+  <pattern id="grid" width="28" height="28"
+           patternUnits="userSpaceOnUse">
+    <path d="M28 0H0V28"
+          fill="none"
+          stroke="#D84C80"
+          stroke-opacity=".09"/>
+  </pattern>
 
-    <g class="card">
-        <rect width="100%" height="100%"
-              rx="22" fill="url(#background)"/>
-    </g>
-    
-    <rect x="1" y="1" width="998" height="153"
-          rx="21" fill="#f3dfe3"/>
+  <style>
+    .heading {
+      font-family: Georgia, serif;
+      fill: #FBEAF1;
+    }
 
-    <circle cx="65" cy="77" r="31"
-            fill="#7b1e3a"/>
+    .mono {
+      font-family: monospace;
+      fill: #F3B2CA;
+    }
 
-    <text x="65" y="85"
-          fill="#f6e7e9" font-size="22"
-          text-anchor="middle">
-        1
+    .muted {
+      font-family: monospace;
+      fill: #B9869B;
+    }
+
+    .pink {
+      fill: #D84C80;
+    }
+
+    .line {
+      stroke: #D84C80;
+      stroke-opacity: .65;
+      fill: none;
+    }
+  </style>
+
+</defs>
+
+<title>CakeBlogSite</title>
+
+<rect width="100%" height="100%" rx="22"
+      fill="url(#background)"/>
+
+<rect width="100%" height="100%" rx="22"
+      fill="url(#grid)"/>
+
+<!-- ATMOSPHERIC SMOKE -->
+
+<g filter="url(#smoke)" opacity=".55">
+
+  <ellipse cx="8%" cy="15%" rx="20%" ry="28%"
+           fill="#7D173B" opacity=".5"/>
+
+  <ellipse cx="90%" cy="80%" rx="24%" ry="30%"
+           fill="#D84C80" opacity=".18"/>
+
+</g>
+
+<!-- PINK MIST -->
+
+<ellipse cx="85%" cy="15%" rx="28%" ry="40%"
+         fill="url(#mist)"/>
+
+<!-- GLOWING BORDER -->
+
+<rect x="1" y="1"
+      width="98%" height="98%"
+      rx="21"
+      fill="none"
+      stroke="#D84C80"
+      stroke-opacity=".65"/>
+
+<!-- DECORATIVE STARS -->
+
+<g fill="#F3B2CA" filter="url(#glow)">
+
+  <path d="M88 30l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/>
+
+  <path d="M90 75l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
+
+</g>
+
+
+    <text x="28" y="38"
+          class="pink mono"
+          font-size="11"
+          letter-spacing="2">
+      FEATURED REPOSITORY / 01
     </text>
 
-    <text x="120" y="60"
-          fill="#3d0a1b" font-size="22"
-          font-weight="600">
-        CakeBlogSite
+    <text x="28" y="83"
+          class="heading"
+          font-size="29">
+      CakeBlogSite
     </text>
 
-    <text x="120" y="89"
-          fill="#7b1e3a" font-size="14">
-        A baking-focused web project.
+    <text x="28" y="112"
+          class="mono"
+          font-size="12">
+      A baking-focused web project.
     </text>
 
-    <text x="120" y="120"
-          fill="#c9a3ad" font-size="12">
-        HTML / CSS
+    <rect x="28" y="132"
+          width="125" height="25"
+          rx="13"
+          fill="#3C0A1F"
+          stroke="#7D173B"/>
+
+    <text x="90" y="149"
+          text-anchor="middle"
+          class="mono"
+          font-size="10">
+      HTML / CSS
     </text>
 
-    <text x="950" y="88"
-          fill="#b83a5a" font-size="26"
-          text-anchor="middle">
-        ↗
-    </text>
-    
-</svg>
+    <text x="430" y="145"
+          class="heading"
+          font-size="25">↗</text>
+    </svg>
