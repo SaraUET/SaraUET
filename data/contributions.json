@@ -1,7 +1,36 @@
 
 {
   "total": 0,
-  "months": [],
+  "months": [
+    {
+      "name": "May",
+      "count": 0
+    },
+    {
+      "name": "June",
+      "count": 0
+    },
+    {
+      "name": "July",
+      "count": 0
+    },
+    {
+      "name": "August",
+      "count": 0
+    },
+    {
+      "name": "September",
+      "count": 0
+    },
+    {
+      "name": "October",
+      "count": 0
+    },
+    {
+      "name": "November",
+      "count": 0
+    }
+  ],
   "days": [],
   "current_streak": 0,
   "active_days": 0,
