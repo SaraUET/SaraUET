@@ -228,6 +228,31 @@ def contributions(year, counts, w=RIGHT, h=128):
 
 
 def repo_icon(kind, x, y):
+    if kind == "cake":  # sharp vector cake slice, 44x44 box
+        pk = "#e8a4b4"
+        body = (
+            '<defs>'
+            '<linearGradient id="cEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3a6b6"/><stop offset="1" stop-color="#b4607a"/></linearGradient>'
+            '<linearGradient id="cTop" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#dc90a4"/><stop offset=".6" stop-color="#c26a83"/><stop offset="1" stop-color="#9a4560"/></linearGradient>'
+            '<linearGradient id="cBand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a1428"/><stop offset="1" stop-color="#2e0a16"/></linearGradient>'
+            '<filter id="cGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.800"/></filter></defs>'
+            '<path d="M9.500 28 24 15Q34 11 46 19L46.500 38.500 10 49.500Z" fill="#e8708f" fill-opacity=".16" filter="url(#cGlow)"/>'
+            '<path d="M9.500 28 24 15Q34 11 46 19L46.500 38.500 10 49.500Z" fill="url(#cBand)"/>'
+            '<path d="M9.500 28 24 15Q34 11 46 19L46 22 9.500 32Z" fill="url(#cTop)"/>'
+            '<path d="M10 28.500 24.500 15.800Q34 12 44.500 18.500" fill="none" stroke="#f2c2cd" stroke-opacity=".4" stroke-width=".8" stroke-linecap="round"/>'
+            '<path d="M9.500 30.800 46 21.200" stroke="url(#cEdge)" stroke-width="1.500" fill="none"/>'
+            '<path d="M10 40.500 46 29.600" stroke="url(#cEdge)" stroke-width="1.400" fill="none"/>'
+            '<ellipse cx="27.800" cy="35.100" rx="1.600" ry="1" transform="rotate(-17 27.800 35.100)" fill="#4a1428" stroke="#d98ba0" stroke-width=".7"/>'
+            '<path d="M9.500 28 24 15Q34 11 46 19L46.500 38.500 10 49.500Z" fill="none" stroke="url(#cEdge)" stroke-width="1.500" stroke-linejoin="round"/>'
+            '<path d="M9.800 28.500 10.100 49" stroke="#e3a6b6" stroke-width=".8" stroke-opacity=".5" fill="none"/>'
+            '<path d="M24.500 11.200 26.200 17.300 30.600 17.500 32.200 11.800Z" fill="#d98ba0" stroke="#eab4c1" stroke-width=".8" stroke-linejoin="round"/>'
+            '<path d="M25 12.300 31.800 12.700" stroke="#a8506a" stroke-width=".7"/>'
+            '<ellipse cx="32.600" cy="13.600" rx="2.700" ry="3" fill="#4a1022" stroke="#d98ba0" stroke-width=".8"/>'
+            '<path d="M29.500 11.500 30.300 8 32.500 11" fill="#b4607a" stroke="#d98ba0" stroke-width=".6" stroke-linejoin="round"/>')
+        return f'<g transform="translate({x-6} {y-6})">{body}</g>'
+    st = f'fill="none" stroke="{ACCENT}" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"'
+    d = "M7 6h26a2 2 0 0 1 2 2v17H5V8a2 2 0 0 1 2-2ZM1 31h38l-3-6H4Z"
+    return f'<g transform="translate({x} {y})"><path d="{d}" {st}/></g>'
     st = f'fill="none" stroke="{ACCENT}" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"'
     if kind == "cake":
         d = "M2 14 30 7l4 9L6 23ZM6 23v13l28-7V16M18 11l1.600 8M24 4.500a2 2 0 1 1 .1 0"
