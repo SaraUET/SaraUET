@@ -1,155 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-        width="480"
-        height="175"
-        viewBox="0 0 480 175"
-        role="img">
-
-<defs>
-
-  <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#10030A"/>
-    <stop offset=".55" stop-color="#1B0610"/>
-    <stop offset="1" stop-color="#31091C"/>
-  </linearGradient>
-
-  <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#7D173B"/>
-    <stop offset=".55" stop-color="#D84C80"/>
-    <stop offset="1" stop-color="#F3B2CA"/>
-  </linearGradient>
-
-  <radialGradient id="mist">
-    <stop offset="0" stop-color="#D84C80" stop-opacity=".32"/>
-    <stop offset="1" stop-color="#D84C80" stop-opacity="0"/>
-  </radialGradient>
-
-  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-    <feGaussianBlur stdDeviation="5" result="blur"/>
-    <feMerge>
-      <feMergeNode in="blur"/>
-      <feMergeNode in="SourceGraphic"/>
-    </feMerge>
-  </filter>
-
-  <filter id="smoke">
-    <feGaussianBlur stdDeviation="16"/>
-  </filter>
-
-  <pattern id="grid" width="28" height="28"
-           patternUnits="userSpaceOnUse">
-    <path d="M28 0H0V28"
-          fill="none"
-          stroke="#D84C80"
-          stroke-opacity=".09"/>
-  </pattern>
-
-  <style>
-    .heading {
-      font-family: Georgia, serif;
-      fill: #FBEAF1;
-    }
-
-    .mono {
-      font-family: monospace;
-      fill: #F3B2CA;
-    }
-
-    .muted {
-      font-family: monospace;
-      fill: #B9869B;
-    }
-
-    .pink {
-      fill: #D84C80;
-    }
-
-    .line {
-      stroke: #D84C80;
-      stroke-opacity: .65;
-      fill: none;
-    }
-  </style>
-
-</defs>
-
-<title>CakeBlogSite</title>
-
-<rect width="100%" height="100%" rx="22"
-      fill="url(#background)"/>
-
-<rect width="100%" height="100%" rx="22"
-      fill="url(#grid)"/>
-
-<!-- ATMOSPHERIC SMOKE -->
-
-<g filter="url(#smoke)" opacity=".55">
-
-  <ellipse cx="8%" cy="15%" rx="20%" ry="28%"
-           fill="#7D173B" opacity=".5"/>
-
-  <ellipse cx="90%" cy="80%" rx="24%" ry="30%"
-           fill="#D84C80" opacity=".18"/>
-
-</g>
-
-<!-- PINK MIST -->
-
-<ellipse cx="85%" cy="15%" rx="28%" ry="40%"
-         fill="url(#mist)"/>
-
-<!-- GLOWING BORDER -->
-
-<rect x="1" y="1"
-      width="98%" height="98%"
-      rx="21"
-      fill="none"
-      stroke="#D84C80"
-      stroke-opacity=".65"/>
-
-<!-- DECORATIVE STARS -->
-
-<g fill="#F3B2CA" filter="url(#glow)">
-
-  <path d="M88 30l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/>
-
-  <path d="M90 75l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
-
-</g>
-
-
-    <text x="28" y="38"
-          class="pink mono"
-          font-size="11"
-          letter-spacing="2">
-      FEATURED REPOSITORY / 01
-    </text>
-
-    <text x="28" y="83"
-          class="heading"
-          font-size="29">
-      CakeBlogSite
-    </text>
-
-    <text x="28" y="112"
-          class="mono"
-          font-size="12">
-      A baking-focused web project.
-    </text>
-
-    <rect x="28" y="132"
-          width="125" height="25"
-          rx="13"
-          fill="#3C0A1F"
-          stroke="#7D173B"/>
-
-    <text x="90" y="149"
-          text-anchor="middle"
-          class="mono"
-          font-size="10">
-      HTML / CSS
-    </text>
-
-    <text x="430" y="145"
-          class="heading"
-          font-size="25">↗</text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="295" height="84" viewBox="0 0 295 84" role="img"><title>CakeBlogSite</title><defs><style>
+.serif{font-family:'Cormorant Garamond','Playfair Display',Georgia,'Times New Roman',serif}
+.mono{font-family:'JetBrains Mono','SF Mono',Consolas,'Courier New',monospace}
+.sans{font-family:'Inter','Segoe UI',Helvetica,Arial,sans-serif}
+.caret{animation:blink 1.1s steps(1) infinite}
+.live{animation:pulse 2.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.caret,.live{animation:none}}
+</style>
+<linearGradient id="gCard" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a0610"/><stop offset="1" stop-color="#130206"/></linearGradient>
+<linearGradient id="gHero" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d0409"/><stop offset=".55" stop-color="#0c0204"/><stop offset="1" stop-color="#16030a"/></linearGradient>
+<linearGradient id="gStat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#40101e"/><stop offset="1" stop-color="#2a0812"/></linearGradient>
+<linearGradient id="gRepo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3e101b"/><stop offset="1" stop-color="#26080f"/></linearGradient>
+<linearGradient id="gPill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a121c"/><stop offset="1" stop-color="#22090f"/></linearGradient>
+<linearGradient id="gFade" x1="0" y1="0" x2="1" y2="0"><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<mask id="mGrid" maskUnits="userSpaceOnUse" x="0" y="0" width="850" height="216"><rect width="850" height="216" fill="url(#gFade)"/></mask>
+<pattern id="pGrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#b04462" stroke-opacity=".17"/></pattern>
+<filter id="fCloud" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>
+<radialGradient id="gPuff" cx=".38" cy=".28" r=".85"><stop offset="0" stop-color="#e6a9b0"/><stop offset=".3" stop-color="#bf5a72"/><stop offset=".65" stop-color="#7a2640"/><stop offset="1" stop-color="#4a1424" stop-opacity="0"/></radialGradient>
+<filter id="fPuff" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5.500"/></filter>
+<filter id="fSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+<clipPath id="cHeroF"><rect width="850" height="216" rx="16"/></clipPath>
+<clipPath id="cHeroS"><rect width="850" height="186" rx="16"/></clipPath>
+</defs><rect x=".5" y=".5" width="294" height="83" rx="12" fill="url(#gRepo)" stroke="#702b3c" stroke-opacity="0.7"/><rect x="1.5" y="1.5" width="292" height="81" rx="11" fill="none" stroke="#ffb0c0" stroke-opacity=".045"/><g transform="translate(18 22.0)"><path d="M2 14 30 7l4 9L6 23ZM6 23v13l28-7V16M18 11l1.600 8M24 4.500a2 2 0 1 1 .1 0" fill="none" stroke="#ee9bae" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></g><text x="78" y="21" class="serif" font-size="15.5" fill="#ecd0d7" text-anchor="start" dominant-baseline="central" font-weight="600">CakeBlogSite</text><text x="78" y="36" class="mono" font-size="8" fill="#c77691" text-anchor="start" dominant-baseline="central" >A baking-focused web project.</text><circle cx="82" cy="65" r="3" fill="#c95b7b"/><text x="91" y="65" class="mono" font-size="8.5" fill="#cfa0aa" text-anchor="start" dominant-baseline="central" >HTML / CSS</text><circle cx="271" cy="65" r="11" fill="none" stroke="#702b3c"/><path d="M266 65H276M272 61l4 4-4 4" stroke="#ee9bae" fill="none" stroke-width="1.300" stroke-linecap="round"/></svg>

@@ -1,219 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg"
-        width="440"
-        height="250"
-        viewBox="0 0 440 250"
-        role="img">
-
-<defs>
-
-  <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#10030A"/>
-    <stop offset=".55" stop-color="#1B0610"/>
-    <stop offset="1" stop-color="#31091C"/>
-  </linearGradient>
-
-  <linearGradient id="pink" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#7D173B"/>
-    <stop offset=".55" stop-color="#D84C80"/>
-    <stop offset="1" stop-color="#F3B2CA"/>
-  </linearGradient>
-
-  <radialGradient id="mist">
-    <stop offset="0" stop-color="#D84C80" stop-opacity=".32"/>
-    <stop offset="1" stop-color="#D84C80" stop-opacity="0"/>
-  </radialGradient>
-
-  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-    <feGaussianBlur stdDeviation="5" result="blur"/>
-    <feMerge>
-      <feMergeNode in="blur"/>
-      <feMergeNode in="SourceGraphic"/>
-    </feMerge>
-  </filter>
-
-  <filter id="smoke">
-    <feGaussianBlur stdDeviation="16"/>
-  </filter>
-
-  <pattern id="grid" width="28" height="28"
-           patternUnits="userSpaceOnUse">
-    <path d="M28 0H0V28"
-          fill="none"
-          stroke="#D84C80"
-          stroke-opacity=".09"/>
-  </pattern>
-
-  <style>
-    .heading {
-      font-family: Georgia, serif;
-      fill: #FBEAF1;
-    }
-
-    .mono {
-      font-family: monospace;
-      fill: #F3B2CA;
-    }
-
-    .muted {
-      font-family: monospace;
-      fill: #B9869B;
-    }
-
-    .pink {
-      fill: #D84C80;
-    }
-
-    .line {
-      stroke: #D84C80;
-      stroke-opacity: .65;
-      fill: none;
-    }
-  </style>
-
-</defs>
-
-<title>Tools and interests</title>
-
-<rect width="100%" height="100%" rx="22"
-      fill="url(#background)"/>
-
-<rect width="100%" height="100%" rx="22"
-      fill="url(#grid)"/>
-
-<!-- ATMOSPHERIC SMOKE -->
-
-<g filter="url(#smoke)" opacity=".55">
-
-  <ellipse cx="8%" cy="15%" rx="20%" ry="28%"
-           fill="#7D173B" opacity=".5"/>
-
-  <ellipse cx="90%" cy="80%" rx="24%" ry="30%"
-           fill="#D84C80" opacity=".18"/>
-
-</g>
-
-<!-- PINK MIST -->
-
-<ellipse cx="85%" cy="15%" rx="28%" ry="40%"
-         fill="url(#mist)"/>
-
-<!-- GLOWING BORDER -->
-
-<rect x="1" y="1"
-      width="98%" height="98%"
-      rx="21"
-      fill="none"
-      stroke="#D84C80"
-      stroke-opacity=".65"/>
-
-<!-- DECORATIVE STARS -->
-
-<g fill="#F3B2CA" filter="url(#glow)">
-
-  <path d="M88 30l4 12 12 4-12 4-4 12-4-12-12-4 12-4z"/>
-
-  <path d="M90 75l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/>
-
-</g>
-
-
-    <text x="30" y="40"
-          class="pink mono"
-          font-size="12"
-          letter-spacing="3">
-      02 / WHAT I WORK WITH
-    </text>
-
-    <text x="30" y="88"
-          class="heading"
-          font-size="30">
-      Tools &amp; interests.
-    </text>
-
-    <path d="M30 105H410"
-          class="line"/>
-    
-        <rect x="30" y="125"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="86" y="147"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          HTML / CSS
-        </text>
-        
-        <rect x="158" y="125"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="214" y="147"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          JavaScript
-        </text>
-        
-        <rect x="286" y="125"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="342" y="147"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          Python
-        </text>
-        
-        <rect x="30" y="178"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="86" y="200"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          Git &amp; GitHub
-        </text>
-        
-        <rect x="158" y="178"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="214" y="200"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          UI / UX
-        </text>
-        
-        <rect x="286" y="178"
-              width="112" height="34"
-              rx="17"
-              fill="#3C0A1F"
-              stroke="#7D173B"/>
-
-        <text x="342" y="200"
-              text-anchor="middle"
-              class="mono"
-              font-size="10">
-          Business Ops
-        </text>
-        
-    <text x="30" y="235"
-          class="muted"
-          font-size="9">
-      ALWAYS LEARNING, ALWAYS EXPERIMENTING
-    </text>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="236" height="108" viewBox="0 0 236 108" role="img"><title>Tech stack</title><defs><style>
+.serif{font-family:'Cormorant Garamond','Playfair Display',Georgia,'Times New Roman',serif}
+.mono{font-family:'JetBrains Mono','SF Mono',Consolas,'Courier New',monospace}
+.sans{font-family:'Inter','Segoe UI',Helvetica,Arial,sans-serif}
+.caret{animation:blink 1.1s steps(1) infinite}
+.live{animation:pulse 2.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes pulse{50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.caret,.live{animation:none}}
+</style>
+<linearGradient id="gCard" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a0610"/><stop offset="1" stop-color="#130206"/></linearGradient>
+<linearGradient id="gHero" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1d0409"/><stop offset=".55" stop-color="#0c0204"/><stop offset="1" stop-color="#16030a"/></linearGradient>
+<linearGradient id="gStat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#40101e"/><stop offset="1" stop-color="#2a0812"/></linearGradient>
+<linearGradient id="gRepo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3e101b"/><stop offset="1" stop-color="#26080f"/></linearGradient>
+<linearGradient id="gPill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a121c"/><stop offset="1" stop-color="#22090f"/></linearGradient>
+<linearGradient id="gFade" x1="0" y1="0" x2="1" y2="0"><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<mask id="mGrid" maskUnits="userSpaceOnUse" x="0" y="0" width="850" height="216"><rect width="850" height="216" fill="url(#gFade)"/></mask>
+<pattern id="pGrid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#b04462" stroke-opacity=".17"/></pattern>
+<filter id="fCloud" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>
+<radialGradient id="gPuff" cx=".38" cy=".28" r=".85"><stop offset="0" stop-color="#e6a9b0"/><stop offset=".3" stop-color="#bf5a72"/><stop offset=".65" stop-color="#7a2640"/><stop offset="1" stop-color="#4a1424" stop-opacity="0"/></radialGradient>
+<filter id="fPuff" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5.500"/></filter>
+<filter id="fSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+<clipPath id="cHeroF"><rect width="850" height="216" rx="16"/></clipPath>
+<clipPath id="cHeroS"><rect width="850" height="186" rx="16"/></clipPath>
+</defs><rect x=".5" y=".5" width="235" height="107" rx="14" fill="url(#gCard)" stroke="#702b3c" stroke-opacity="0.85"/><rect x="1.5" y="1.5" width="233" height="105" rx="13" fill="none" stroke="#ffb0c0" stroke-opacity=".045"/><path d="M26 12 20 18l6 6M34 12l6 6-6 6M31 9l-3 18" transform="translate(-2 -1) scale(.72) translate(6 6)" stroke="#ee9bae" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="42" y="17" class="serif" font-size="15" fill="#f5eaed" text-anchor="start" dominant-baseline="central" font-weight="500">Tech Stack</text><rect x="18.0" y="34" width="50.4" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="43.2" y="44" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >Python</text><rect x="75.4" y="34" width="72.0" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="111.4" y="44" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >JavaScript</text><rect x="154.4" y="34" width="39.6" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="174.2" y="44" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >HTML</text><rect x="18.0" y="57" width="34.2" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="35.1" y="67" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >CSS</text><rect x="59.2" y="57" width="45.0" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="81.7" y="67" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >React</text><rect x="111.2" y="57" width="34.2" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="128.3" y="67" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >Git</text><rect x="152.4" y="57" width="34.2" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="169.5" y="67" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >SQL</text><rect x="18.0" y="80" width="82.8" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="59.4" y="90" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >UI/UX Design</text><rect x="107.8" y="80" width="82.8" height="20" rx="9" fill="#340713" stroke="#702b3c" stroke-opacity=".7"/><text x="149.2" y="90" class="mono" font-size="8.8" fill="#dec4c7" text-anchor="middle" dominant-baseline="central" >Business Ops</text></svg>
